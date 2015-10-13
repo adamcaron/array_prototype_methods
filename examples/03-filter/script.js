@@ -1,7 +1,7 @@
 // TODO: Filter out just the photographs and store them in a variable called `photographs`.
 
 var photographs = instagramAPI.data.filter(function (datum) {
-  return datum.images.url;
+  return datum.type === "image";
 })
 
 // TODO: Filter out just the videos and store them in a variable called `videos`.
@@ -17,3 +17,18 @@ var popularPhotographs = photographs.filter(function (photo) {
 })
 
 // TODO: Map each photograph into a DOM node and append it to the #photographs DIV element.
+
+function createImageElementFromPhotograph(photograph) {
+  var image = document.createElement('img');
+  image.alt = photograph.caption.text;
+  image.src = photograph.images.low_resolution.url;
+  image.className = "instagram-image";
+  return image;
+}
+
+var photographsDiv = document.getElementById('photographs')
+function addInstagramImageToThePage(photograph) {
+  photographsDiv.appendChild(photograph);
+}
+
+photographs.map(createImageElementFromPhotograph).forEach(addInstagramImageToThePage);
